@@ -1,0 +1,49 @@
+name: System Report
+
+on: push
+
+jobs:
+    system-info:
+        runs-on: ubuntu-latest
+        steps:
+            - name: OS Name and Kernal Version
+              run: |
+                echo "OS Name and Kernal Version"
+                uname -a
+            - name: Disk space free
+              run: |
+                echo "Disk space free"
+                df -h
+            - name: Current date and time
+              run: |
+                echo "Current date and time"
+                date
+            - name: Install tree using apt-get
+              run:
+                sudo apt-get install tree -y
+            - name: Folder structure of the current directory
+              run:
+                tree -L 2
+    
+    tool-check:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Install jq using apt-get
+              run:
+                sudo apt-get install jq-y
+            - name: Create report.json containing atleast 3 key-value pairs
+              run: |
+                echo '{"name": "John Doe", "age": 30, "city": "New York"}' > report.json
+            - name: Use jq to read one value out of that file and print it
+              run: |
+                    echo "Reading value from report.json"
+                    jq '.name' report.json
+            - name: Print the installed versions of python3, git and jq, each on its own line
+              run: |
+                echo "Installed versions of python3, git and jq"
+                python3 --version
+                git --version
+                jq --version
+            - name: Finish by printing "Report complete"
+              run: |
+                echo "Report complete"
