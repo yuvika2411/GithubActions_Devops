@@ -14,6 +14,5 @@ jobs:
             - name: Failed Step
               run: |
                 echo "This step is designed to fail"
-                exit 1  
             - name: Say Goodbye
               run: echo "Goodbye, World!"
