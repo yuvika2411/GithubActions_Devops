@@ -1,55 +1,19 @@
-name: System Report
+name: Building Blocks
 
-on: push
-
+on: workflow_dispatch
 jobs:
-  system-info:
-    runs-on: ubuntu-latest
-    steps:
-      - name: OS Name and Kernel Version
-        run: |
-          echo "OS Name: $(uname -s)"
-          echo "Kernel Version: $(uname -r)"
+    echo-hello:
+        runs-on: ubuntu-Latest
+        steps:
+            - name: Echo Hello
+              run: echo "Hello, World!"
+    echo-goodbye:
+        runs-on: ubuntu-Latest
+        steps:
+            - name: Failed Step
+              run: |
+                echo "This step is designed to fail"
+            - name: Say Goodbye
+              run: echo "Goodbye, World!"
 
-      - name: Disk space free
-        run: |
-          df -h /
-
-      - name: Current date and time
-        run: |
-          date
-
-      - name: Install tree using apt-get
-        run: |
-          sudo apt-get update
-          sudo apt-get install tree -y
-
-      - name: Folder structure of runner home directory
-        run: |
-          tree -L 2 "$HOME"
-
-  tool-check:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Install jq using apt-get
-        run: |
-          sudo apt-get update
-          sudo apt-get install jq -y
-
-      - name: Create report.json
-        run: |
-          echo '{"name":"John Doe","age":30,"city":"New York"}' > report.json
-
-      - name: Read one value using jq
-        run: |
-          jq '.name' report.json
-
-      - name: Print installed versions
-        run: |
-          python3 --version
-          git --version
-          jq --version
-
-      - name: Report complete
-        run: |
-          echo "Report complete"
+          
