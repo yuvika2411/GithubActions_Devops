@@ -3,47 +3,44 @@ name: System Report
 on: push
 
 jobs:
-    system-info:
-        runs-on: ubuntu-latest
-        steps:
-            - name: OS Name and Kernal Version
-              run: |
-                echo "OS Name and Kernal Version"
-                uname -a
-            - name: Disk space free
-              run: |
-                echo "Disk space free"
-                df -h
-            - name: Current date and time
-              run: |
-                echo "Current date and time"
-                date
-            - name: Install tree using apt-get
-              run:
-                sudo apt-get install tree -y
-            - name: Folder structure of the current directory
-              run:
-                tree -L 2
-    
-    tool-check:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Install jq using apt-get
-              run:
-                sudo apt-get install jq-y
-            - name: Create report.json containing atleast 3 key-value pairs
-              run: |
-                echo '{"name": "John Doe", "age": 30, "city": "New York"}' > report.json
-            - name: Use jq to read one value out of that file and print it
-              run: |
-                    echo "Reading value from report.json"
-                    jq '.name' report.json
-            - name: Print the installed versions of python3, git and jq, each on its own line
-              run: |
-                echo "Installed versions of python3, git and jq"
-                python3 --version
-                git --version
-                jq --version
-            - name: Finish by printing "Report complete"
-              run: |
-                echo "Report complete"
+  system-info:
+    runs-on: ubuntu-latest
+    steps:
+      - name: OS Name and kernal version
+        run: |
+          echo "OS Name: $(uname -s) Kernel Version: $(uname -r)"
+      - name: Disk Space free
+        run: |
+          echo "Disk Space Free: $(df -h / | awk 'NR==2 {print $4}')"
+      - name: Current Date and Time
+        run: |
+          echo "Current Date and Time: $(date)"
+      - name: Install Tree (apt-get)
+        run: |
+          sudo apt-get install -y tree
+      - name: Display Directory Structure
+        run: |
+          echo "Directory Structure:"
+          tree -L 2
+
+  tool-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install jq
+        run: |
+          sudo apt-get install -y jq
+      - name: A sample report.json
+        run: |
+          echo '{"name": "System Report", "version": "1.0", "status": "success"}' > report.json
+      - name: Read report.json using jq
+        run: |
+          echo "Reading report.json using jq:"
+          cat report.json | jq '.name'
+      - name: Print the installed versions of python3, git and jq, each on its own line
+        run: |
+          echo "Installed Versions:"
+          python3 --version
+          git --version
+          jq --version
+      - name: Report complete
+        run: echo "System report completed successfully."
