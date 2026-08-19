@@ -1,0 +1,28 @@
+name: The subfolder builder
+
+on:
+    push:
+    workflow_dispatch:
+
+jobs: 
+    build:
+        runs-on: ubuntu-Latest
+        defaults:
+            run:
+                working-directory: react-app
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v7
+            - name: Setup Node.js
+              uses: actions/setup-node@v7
+              with:
+                  node-version: "24.x"
+            - name: Current working directory
+              run: pwd
+            - name: List current folder contents
+              run: ls -la
+            - name: Completed
+              run: echo "Build folder confirmed"
+
+# question: Note in one line whether the checkout step was affected by the default working directory, and why.
+# ans: The checkout step was not affected by the default working directory because it always checks out the repository to the root of the workspace, regardless of the specified working directory for subsequent steps.

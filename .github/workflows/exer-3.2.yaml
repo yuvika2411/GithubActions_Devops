@@ -1,0 +1,27 @@
+name: The Checkout Proof
+
+on:
+    push:
+    workflow_dispatch:
+
+jobs:
+    prove:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Print current folder path and lists its contents
+              run: 
+                pwd
+                ls -la
+            - name: Checkout repository
+              uses: actions/checkout@v7
+            - name: List current folder contents
+              run: 
+                ls -la
+            - name: Count how many files are present
+              run: 
+                find . -type f | wc -l
+            - name: Completed
+              run: echo "Proof captured"
+
+# quesion : Write one line explaining what the two listings show.
+# ans: The two listings show the contents of the current directory before and after checking out the repository, demonstrating the changes made by the checkout action.

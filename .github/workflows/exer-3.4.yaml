@@ -1,0 +1,39 @@
+name: The ordered pipeline
+
+on: 
+    push:
+    workflow_dispatch:
+
+jobs:
+    setup:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v7
+            - name: Setup Python version
+              uses: actions/setup-python@v7
+              with:
+                  python-version: "3.11"
+            - name: Completed
+              run: echo "Setup done"
+
+    verify:
+        runs-on: ubuntu-latest
+        needs: setup
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v7
+            - name: Prints the runtime version
+              run: 
+                python --version
+                pip --version
+            - name: Completed
+              run: echo "Verification done"
+    
+    finish:
+        runs-on: ubuntu-latest
+        needs: verify
+        steps:
+            - name: Completed
+              run: echo "Pipeline finished"
+            
