@@ -1,7 +1,7 @@
 name: The PR gatekeeper
 
 on: 
-    push:
+    # push:
     pull_request:
     workflow_dispatch:
 
